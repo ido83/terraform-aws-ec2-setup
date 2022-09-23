@@ -42,3 +42,6 @@ terraform apply
 
 ### Note
 > Use `terraform destroy` to terminate the EC2 instance and the related security group.
+
+### Debug encoded AWS respponse:
+aws sts decode-authorization-message --encoded-message KDmmJmkLKm...iUtfAa

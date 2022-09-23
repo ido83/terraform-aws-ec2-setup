@@ -9,3 +9,16 @@ variable "key_pair_name" {
   type        = string
   default     = "MyKeyPair"
 }
+
+
+variable "INSTANCE_USERNAME" {
+	default = "ec2_user"
+}
+
+variable "keyName" {
+   default = "MyKeyPair"
+}
+
+variable "keyPath" {
+   default = "MyKeyPair.pem"
+}

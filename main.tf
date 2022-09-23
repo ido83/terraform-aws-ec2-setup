@@ -11,15 +11,34 @@ terraform {
 
 provider "aws" {
   profile = "default"
-  region  = "ap-south-1"
+  region  = "us-east-1"
 }
 
 resource "aws_instance" "app_server" {
-  ami                    = "ami-0851b76e8b1bce90b"
-  instance_type          = "t2.micro"
+  ami                    = "ami-06640050dc3f556bb"
+  instance_type          = "t3.medium"
   key_name               = var.key_pair_name
   vpc_security_group_ids = [aws_security_group.main.id]
-  tags = {
+
+  provisioner "file" {
+	source="script.sh"
+	destination="/tmp/script.sh"
+  }
+  provisioner "remote-exec" {
+	inline=[
+	"chmod +x /tmp/script.sh",
+	"sudo /tmp/script.sh"
+	]
+  }
+  # Login to the ec2-user with the aws key.
+  connection {
+    type        = "ssh"
+    user        = "ec2-user"
+    password    = ""
+    private_key = file(var.keyPath)
+    host        = self.public_ip
+  }   
+ tags = {
     Name = var.instance_name
   }
 }
